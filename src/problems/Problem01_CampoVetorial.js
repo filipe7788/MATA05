@@ -1,18 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { BarChart3 } from 'lucide-react';
 
 // Componente específico para o Campo Vetorial (problema 1)
 const Problem01_CampoVetorial = ({ onBack }) => {
   const canvasRef = useRef(null);
-  const [animating, setAnimating] = useState(false);
   const [showingSpecific, setShowingSpecific] = useState(false);
   const [calculations, setCalculations] = useState('');
 
-  useEffect(() => {
-    drawVectorField();
-  }, [showingSpecific]);
-
-  const drawVectorField = () => {
+  const drawVectorField = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -32,7 +27,12 @@ const Problem01_CampoVetorial = ({ onBack }) => {
     } else {
       drawCompleteField(ctx, centerX, centerY, scale);
     }
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showingSpecific]);
+
+  useEffect(() => {
+    drawVectorField();
+  }, [drawVectorField]);
 
   const drawGrid = (ctx, canvas, centerX, centerY, scale) => {
     ctx.strokeStyle = '#f1f3f4';

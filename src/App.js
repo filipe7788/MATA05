@@ -8,7 +8,7 @@ import ProblemView from './components/ProblemView';
 const App = () => {
   const [currentView, setCurrentView] = useState('home');
   const [selectedProblem, setSelectedProblem] = useState(null);
-  const [completedProblems, setCompletedProblems] = useState([1]);
+  const [completedProblems] = useState([1]);
 
   // Calcular estatísticas
   const totalProblems = weeksData.reduce((acc, week) => acc + week.problems.length, 0);
