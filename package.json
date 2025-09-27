@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Visualizações interativas para exercícios de Cálculo Diferencial e Integral - MATA05",
   "private": true,
-  "homepage": "https://filipe7788.github.io/MATA05",
+  "homepage": "https://mata-05.vercel.app",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
