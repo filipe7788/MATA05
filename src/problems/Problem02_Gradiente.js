@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { BarChart3, Calculator, Eye } from 'lucide-react';
-import { MathInline, MathBlock, MathSection, MathResult, MathDerivation } from '../components/MathRenderer';
+import { Calculator, Eye } from 'lucide-react';
+import { MathInline, MathSection, MathResult, MathDerivation } from '../components/MathRenderer';
 
 // Componente específico para o Gradiente (problema 2)
 const Problem02_Gradiente = ({ onBack }) => {
@@ -10,16 +10,133 @@ const Problem02_Gradiente = ({ onBack }) => {
   const [rotationX, setRotationX] = useState(0);
   const [rotationY, setRotationY] = useState(0);
 
-  // Função escalar f(x,y,z) = x²y³ - 2xz
-  const f = (x, y, z) => x * x * y * y * y - 2 * x * z;
+  // Função escalar f(x,y,z) = x²y³ - 2xz (comentada pois não é usada diretamente)
+  // const f = (x, y, z) => x * x * y * y * y - 2 * x * z;
 
   // Derivadas parciais
-  const fx = (x, y, z) => 2 * x * y * y * y - 2 * z;
-  const fy = (x, y, z) => 3 * x * x * y * y;
-  const fz = (x, y, z) => -2 * x;
+  const fx = useCallback((x, y, z) => 2 * x * y * y * y - 2 * z, []);
+  const fy = useCallback((x, y, z) => 3 * x * x * y * y, []);
+  const fz = useCallback((x, y, z) => -2 * x, []);
 
   // Gradiente no ponto
-  const gradient = (x, y, z) => [fx(x, y, z), fy(x, y, z), fz(x, y, z)];
+  const gradient = useCallback((x, y, z) => [fx(x, y, z), fy(x, y, z), fz(x, y, z)], [fx, fy, fz]);
+
+  const project3DTo2D = (point, rotX, rotY, centerX, centerY, scale) => {
+    const [x, y, z] = point;
+    
+    // Rotações
+    const cosX = Math.cos(rotX);
+    const sinX = Math.sin(rotX);
+    const cosY = Math.cos(rotY);
+    const sinY = Math.sin(rotY);
+
+    // Aplicar rotações
+    const y1 = y * cosX - z * sinX;
+    const z1 = y * sinX + z * cosX;
+    const x1 = x * cosY + z1 * sinY;
+    // const z2 = -x * sinY + z1 * cosY; // não usado na projeção 2D
+
+    // Projeção ortogonal
+    return {
+      x: centerX + x1 * scale,
+      y: centerY - y1 * scale
+    };
+  };
+
+  const drawArrow = (ctx, x1, y1, x2, y2, color, lineWidth) => {
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = lineWidth;
+
+    // Linha principal
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+
+    // Ponta da seta
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    const arrowLength = 10;
+
+    ctx.beginPath();
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - arrowLength * Math.cos(angle - Math.PI/6),
+              y2 - arrowLength * Math.sin(angle - Math.PI/6));
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - arrowLength * Math.cos(angle + Math.PI/6),
+              y2 - arrowLength * Math.sin(angle + Math.PI/6));
+    ctx.stroke();
+  };
+
+  const draw3DAxes = useCallback((ctx, centerX, centerY, scale) => {
+    const axisLength = 3;
+    
+    // Eixo X (vermelho)
+    const xEnd = project3DTo2D([axisLength, 0, 0], rotationX, rotationY, centerX, centerY, scale);
+    ctx.strokeStyle = '#e74c3c';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(xEnd.x, xEnd.y);
+    ctx.stroke();
+    ctx.fillStyle = '#e74c3c';
+    ctx.font = 'bold 16px Arial';
+    ctx.fillText('X', xEnd.x + 5, xEnd.y + 5);
+
+    // Eixo Y (verde)
+    const yEnd = project3DTo2D([0, axisLength, 0], rotationX, rotationY, centerX, centerY, scale);
+    ctx.strokeStyle = '#22c55e';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(yEnd.x, yEnd.y);
+    ctx.stroke();
+    ctx.fillStyle = '#22c55e';
+    ctx.fillText('Y', yEnd.x + 5, yEnd.y + 5);
+
+    // Eixo Z (azul)
+    const zEnd = project3DTo2D([0, 0, axisLength], rotationX, rotationY, centerX, centerY, scale);
+    ctx.strokeStyle = '#3b82f6';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(zEnd.x, zEnd.y);
+    ctx.stroke();
+    ctx.fillStyle = '#3b82f6';
+    ctx.fillText('Z', zEnd.x + 5, zEnd.y + 5);
+
+    // Origem
+    ctx.fillStyle = '#6b7280';
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 4, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.fillText('O', centerX + 8, centerY - 8);
+  }, [rotationX, rotationY]);
+
+  const drawGradientField = useCallback((ctx, centerX, centerY, scale) => {
+    const points = [
+      [0.5, -0.5, 1], [1.5, -0.5, 1], [0.5, -1.5, 1],
+      [1, 0, 2], [2, -1, 1], [0, -1, 2]
+    ];
+
+    points.forEach(point => {
+      const grad = gradient(point[0], point[1], point[2]);
+      const projectedPoint = project3DTo2D(point, rotationX, rotationY, centerX, centerY, scale);
+      const projectedGrad = project3DTo2D(
+        [point[0] + grad[0] * 0.05, point[1] + grad[1] * 0.05, point[2] + grad[2] * 0.05],
+        rotationX, rotationY, centerX, centerY, scale
+      );
+
+      // Ponto menor
+      ctx.fillStyle = '#94a3b8';
+      ctx.beginPath();
+      ctx.arc(projectedPoint.x, projectedPoint.y, 3, 0, 2 * Math.PI);
+      ctx.fill();
+
+      // Vetor gradiente menor
+      drawArrow(ctx, projectedPoint.x, projectedPoint.y, projectedGrad.x, projectedGrad.y, '#94a3b8', 1.5);
+    });
+  }, [gradient, rotationX, rotationY]);
 
   const draw3DVisualization = useCallback(() => {
     const canvas = canvasRef.current;
@@ -71,128 +188,12 @@ const Problem02_Gradiente = ({ onBack }) => {
       drawGradientField(ctx, centerX, centerY, scale);
     }
 
-  }, [rotationX, rotationY, showingVisualization]);
+  }, [rotationX, rotationY, showingVisualization, gradient, draw3DAxes, drawGradientField]);
 
   useEffect(() => {
     draw3DVisualization();
   }, [draw3DVisualization]);
 
-  const project3DTo2D = (point, rotX, rotY, centerX, centerY, scale) => {
-    const [x, y, z] = point;
-    
-    // Rotações
-    const cosX = Math.cos(rotX);
-    const sinX = Math.sin(rotX);
-    const cosY = Math.cos(rotY);
-    const sinY = Math.sin(rotY);
-
-    // Aplicar rotações
-    const y1 = y * cosX - z * sinX;
-    const z1 = y * sinX + z * cosX;
-    const x1 = x * cosY + z1 * sinY;
-    const z2 = -x * sinY + z1 * cosY;
-
-    // Projeção ortogonal
-    return {
-      x: centerX + x1 * scale,
-      y: centerY - y1 * scale
-    };
-  };
-
-  const draw3DAxes = (ctx, centerX, centerY, scale) => {
-    const axisLength = 3;
-    
-    // Eixo X (vermelho)
-    const xEnd = project3DTo2D([axisLength, 0, 0], rotationX, rotationY, centerX, centerY, scale);
-    ctx.strokeStyle = '#e74c3c';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(centerX, centerY);
-    ctx.lineTo(xEnd.x, xEnd.y);
-    ctx.stroke();
-    ctx.fillStyle = '#e74c3c';
-    ctx.font = 'bold 16px Arial';
-    ctx.fillText('X', xEnd.x + 5, xEnd.y + 5);
-
-    // Eixo Y (verde)
-    const yEnd = project3DTo2D([0, axisLength, 0], rotationX, rotationY, centerX, centerY, scale);
-    ctx.strokeStyle = '#22c55e';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(centerX, centerY);
-    ctx.lineTo(yEnd.x, yEnd.y);
-    ctx.stroke();
-    ctx.fillStyle = '#22c55e';
-    ctx.fillText('Y', yEnd.x + 5, yEnd.y + 5);
-
-    // Eixo Z (azul)
-    const zEnd = project3DTo2D([0, 0, axisLength], rotationX, rotationY, centerX, centerY, scale);
-    ctx.strokeStyle = '#3b82f6';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(centerX, centerY);
-    ctx.lineTo(zEnd.x, zEnd.y);
-    ctx.stroke();
-    ctx.fillStyle = '#3b82f6';
-    ctx.fillText('Z', zEnd.x + 5, zEnd.y + 5);
-
-    // Origem
-    ctx.fillStyle = '#6b7280';
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, 4, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.fillText('O', centerX + 8, centerY - 8);
-  };
-
-  const drawGradientField = (ctx, centerX, centerY, scale) => {
-    const points = [
-      [0.5, -0.5, 1], [1.5, -0.5, 1], [0.5, -1.5, 1],
-      [1, 0, 2], [2, -1, 1], [0, -1, 2]
-    ];
-
-    points.forEach(point => {
-      const grad = gradient(point[0], point[1], point[2]);
-      const projectedPoint = project3DTo2D(point, rotationX, rotationY, centerX, centerY, scale);
-      const projectedGrad = project3DTo2D(
-        [point[0] + grad[0] * 0.05, point[1] + grad[1] * 0.05, point[2] + grad[2] * 0.05],
-        rotationX, rotationY, centerX, centerY, scale
-      );
-
-      // Ponto menor
-      ctx.fillStyle = '#94a3b8';
-      ctx.beginPath();
-      ctx.arc(projectedPoint.x, projectedPoint.y, 3, 0, 2 * Math.PI);
-      ctx.fill();
-
-      // Vetor gradiente menor
-      drawArrow(ctx, projectedPoint.x, projectedPoint.y, projectedGrad.x, projectedGrad.y, '#94a3b8', 1.5);
-    });
-  };
-
-  const drawArrow = (ctx, x1, y1, x2, y2, color, lineWidth) => {
-    ctx.strokeStyle = color;
-    ctx.fillStyle = color;
-    ctx.lineWidth = lineWidth;
-
-    // Linha principal
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
-
-    // Ponta da seta
-    const angle = Math.atan2(y2 - y1, x2 - x1);
-    const arrowLength = 10;
-
-    ctx.beginPath();
-    ctx.moveTo(x2, y2);
-    ctx.lineTo(x2 - arrowLength * Math.cos(angle - Math.PI/6),
-              y2 - arrowLength * Math.sin(angle - Math.PI/6));
-    ctx.moveTo(x2, y2);
-    ctx.lineTo(x2 - arrowLength * Math.cos(angle + Math.PI/6),
-              y2 - arrowLength * Math.sin(angle + Math.PI/6));
-    ctx.stroke();
-  };
 
   const handleMouseMove = (e) => {
     if (e.buttons === 1) { // Botão esquerdo pressionado

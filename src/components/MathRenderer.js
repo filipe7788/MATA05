@@ -70,4 +70,5 @@ export const MathDerivation = ({ steps }) => {
   );
 };
 
-export default { MathInline, MathBlock, MathSection, MathResult, MathDerivation };
+const MathRenderer = { MathInline, MathBlock, MathSection, MathResult, MathDerivation };
+export default MathRenderer;

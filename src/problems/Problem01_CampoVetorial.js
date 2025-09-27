@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { BarChart3 } from 'lucide-react';
-import { MathInline, MathBlock } from '../components/MathRenderer';
+import { MathInline } from '../components/MathRenderer';
 
 // Componente específico para o Campo Vetorial (problema 1)
 const Problem01_CampoVetorial = ({ onBack }) => {
