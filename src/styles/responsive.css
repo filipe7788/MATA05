@@ -8,6 +8,37 @@
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
+/* Global KaTeX responsive fixes */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.katex {
+  max-width: 100%;
+}
+
+/* Força scroll horizontal suave para fórmulas longas */
+.katex-display::-webkit-scrollbar {
+  height: 4px;
+}
+
+.katex-display::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.katex-display::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 2px;
+}
+
+.katex-display::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
 .math-section {
   margin-bottom: 32px;
 }
@@ -141,11 +172,14 @@
   
   .math-step {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    font-size: 1rem;
-    padding: 12px 0;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    padding: 16px;
     border-bottom: 1px solid #e9ecef;
+    background: #fafbfc;
+    border-radius: 8px;
+    margin-bottom: 12px;
   }
   
   .math-step:last-child {
@@ -153,28 +187,62 @@
   }
   
   .math-left {
-    min-width: auto;
-    text-align: left;
+    width: 100%;
+    text-align: center;
     font-weight: bold;
     color: #495057;
+    background: #fff3cd;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ffeaa7;
+    overflow-x: auto;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  
+
   .math-equals {
-    margin: 0 8px;
-    font-size: 1.1rem;
-    align-self: flex-start;
+    margin: 6px 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #6c757d;
+    align-self: center;
   }
-  
+
   .math-right {
     width: 100%;
-    word-break: break-all;
+    text-align: center;
+    background: #d1ecf1;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #bee5eb;
+    overflow-x: auto;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Fórmulas dentro das caixas coloridas */
+  .math-left .katex,
+  .math-right .katex {
+    font-size: 0.7rem !important;
+  }
+
+  .math-left .katex-display,
+  .math-right .katex-display {
+    margin: 0 !important;
+    padding: 0 !important;
   }
   
   .math-result {
     margin-top: 8px;
-    padding: 8px 16px;
-    font-size: 1.1rem;
-    align-self: flex-start;
+    padding: 12px 16px;
+    font-size: 1rem;
+    width: 100%;
+    text-align: center;
+    border-radius: 8px;
   }
   
   .final-result {
@@ -186,26 +254,182 @@
   .math-derivation {
     gap: 12px;
   }
+
+  /* KaTeX mobile optimizations */
+  .katex-display {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    margin: 0.5rem 0 !important;
+    padding: 8px !important;
+    text-align: center !important;
+  }
+
+  .katex {
+    font-size: 0.85rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* Melhor scroll horizontal para fórmulas longas */
+  .math-left .katex-display,
+  .math-right .katex-display {
+    margin: 0 !important;
+    padding: 4px !important;
+  }
+
+  /* Seções matemáticas mais compactas */
+  .math-section {
+    margin-bottom: 20px;
+  }
+
+  .math-section-title {
+    font-size: 1rem;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+
+  /* Melhorar enunciados das questões no mobile */
+  .question-section {
+    padding: 12px !important;
+    margin: 0 8px 20px 8px !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+  }
+
+  .question-section h3 {
+    font-size: 0.95rem !important;
+    margin-bottom: 8px !important;
+    line-height: 1.3 !important;
+  }
+
+  .question-section p {
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Fórmulas no enunciado - muito menores */
+  .question-section .katex {
+    font-size: 0.7rem !important;
+    max-width: 100% !important;
+  }
+
+  .question-section .katex-display {
+    margin: 0.3rem 0 !important;
+    padding: 2px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    white-space: nowrap !important;
+  }
+
+  /* Container das seções de definição/fórmula */
+  .formula-section {
+    padding: 12px !important;
+    margin: 0 8px 16px 8px !important;
+    overflow-x: auto !important;
+  }
+
+  .formula-section .katex {
+    font-size: 0.75rem !important;
+  }
 }
 
 /* Very small screens */
 @media (max-width: 480px) {
   .math-container {
-    padding: 16px;
-    margin: 0 8px;
+    padding: 12px;
+    margin: 0 4px;
   }
   
   .math-step {
-    padding: 8px 0;
+    padding: 12px;
+    gap: 8px;
   }
   
   .math-formula-box {
     padding: 12px;
   }
+
+  .math-left, .math-right {
+    padding: 6px;
+    font-size: 0.8rem;
+    min-height: 35px;
+  }
+
+  .math-equals {
+    font-size: 1rem;
+    margin: 4px 0;
+  }
+
+  .math-result {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+
+  /* KaTeX ainda menor em telas muito pequenas */
+  .katex {
+    font-size: 0.6rem !important;
+  }
+
+  .katex-display {
+    padding: 2px !important;
+    margin: 0.1rem 0 !important;
+  }
+
+  /* Fórmulas específicas para caixas coloridas em telas pequenas */
+  .math-left .katex,
+  .math-right .katex {
+    font-size: 0.55rem !important;
+  }
+
+  .math-step {
+    padding: 10px;
+    gap: 6px;
+  }
+
+  .math-section-title {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
   
   .final-result {
     padding: 16px;
     font-size: 0.9rem;
+  }
+
+  /* Enunciados ainda menores para telas muito pequenas */
+  .question-section {
+    padding: 8px !important;
+    margin: 0 4px 16px 4px !important;
+  }
+
+  .question-section h3 {
+    font-size: 0.85rem !important;
+    margin-bottom: 6px !important;
+  }
+
+  .question-section p {
+    font-size: 0.75rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .question-section .katex {
+    font-size: 0.6rem !important;
+  }
+
+  .formula-section {
+    padding: 8px !important;
+    margin: 0 4px 12px 4px !important;
+  }
+
+  .formula-section .katex {
+    font-size: 0.65rem !important;
+  }
+
+  /* Container principal mais apertado */
+  .math-container {
+    margin: 0 2px !important;
   }
 }
 

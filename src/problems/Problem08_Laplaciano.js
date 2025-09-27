@@ -57,7 +57,7 @@ const Problem08_Laplaciano = ({ onBack }) => {
           borderRadius: '0 0 16px 16px',
           padding: '24px'
         }}>
-          <div style={{
+          <div className="question-section" style={{
             background: '#dbeafe',
             borderLeft: '4px solid #3b82f6',
             padding: '16px',
@@ -72,7 +72,7 @@ const Problem08_Laplaciano = ({ onBack }) => {
             </p>
           </div>
 
-          <div style={{
+          <div className="formula-section" style={{
             background: '#f3f4f6',
             padding: '20px',
             borderRadius: '8px',

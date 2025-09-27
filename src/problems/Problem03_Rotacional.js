@@ -259,7 +259,7 @@ const Problem03_Rotacional = ({ onBack }) => {
           padding: '24px'
         }}>
           {/* Questão */}
-          <div style={{
+          <div className="question-section" style={{
             background: '#dbeafe',
             borderLeft: '4px solid #3b82f6',
             padding: '16px',
@@ -275,7 +275,7 @@ const Problem03_Rotacional = ({ onBack }) => {
           </div>
 
           {/* Fórmula */}
-          <div style={{
+          <div className="formula-section" style={{
             background: '#f3f4f6',
             padding: '20px',
             borderRadius: '8px',

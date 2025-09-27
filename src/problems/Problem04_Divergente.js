@@ -269,7 +269,7 @@ const Problem04_Divergente = ({ onBack }) => {
           padding: '24px'
         }}>
           {/* Questão */}
-          <div style={{
+          <div className="question-section" style={{
             background: '#dbeafe',
             borderLeft: '4px solid #3b82f6',
             padding: '16px',
