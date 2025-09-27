@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { BarChart3 } from 'lucide-react';
+import { MathInline, MathBlock } from '../components/MathRenderer';
 
 // Componente específico para o Campo Vetorial (problema 1)
 const Problem01_CampoVetorial = ({ onBack }) => {
@@ -216,7 +217,7 @@ const Problem01_CampoVetorial = ({ onBack }) => {
           color: 'white'
         }}>
           <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '8px' }}>
-            Campo Vetorial F(x,y) = -yi + xj
+            Campo Vetorial <MathInline>{"\\mathbf{F}(x,y) = -y\\mathbf{i} + x\\mathbf{j}"}</MathInline>
           </h1>
           <p style={{ opacity: 0.9 }}>Visualização interativa do campo vetorial rotacional</p>
         </div>
@@ -239,20 +240,24 @@ const Problem01_CampoVetorial = ({ onBack }) => {
               📋 Questão:
             </h3>
             <p style={{ color: '#1e40af' }}>
-              Qual descrição geométrica melhor representa o campo vetorial{' '}
-              <strong>F(x,y) = -y<em>i</em> + x<em>j</em></strong> no plano xy?
+              Análise do campo vetorial <MathInline>{"\\mathbf{F}(x,y) = -y\\mathbf{i} + x\\mathbf{j}"}</MathInline> no plano xy.
             </p>
           </div>
 
           {/* Fórmula */}
           <div style={{
             background: '#f3f4f6',
-            padding: '16px',
+            padding: '20px',
             borderRadius: '8px',
             textAlign: 'center',
             marginBottom: '24px'
           }}>
-            <strong>Fórmula:</strong> F(x,y) = (-y, x)
+            <div style={{ marginBottom: '12px' }}>
+              <strong>Campo Vetorial:</strong> <MathInline>{"\\mathbf{F}(x,y) = -y\\mathbf{i} + x\\mathbf{j}"}</MathInline>
+            </div>
+            <div>
+              <strong>Forma Componente:</strong> <MathInline>{"\\mathbf{F}(x,y) = (-y, x)"}</MathInline>
+            </div>
           </div>
 
           {/* Controles */}
@@ -333,13 +338,13 @@ const Problem01_CampoVetorial = ({ onBack }) => {
               📖 Explicação do Conceito:
             </h3>
             <p style={{ color: '#065f46', marginBottom: '12px' }}>
-              <strong>Campo Vetorial Rotacional:</strong> O campo F(x,y) = -y<strong>i</strong> + x<strong>j</strong>{' '}
+              <strong>Campo Vetorial Rotacional:</strong> O campo <MathInline>{"\\mathbf{F}(x,y) = -y\\mathbf{i} + x\\mathbf{j}"}</MathInline>{' '}
               representa vetores que circulam ao redor da origem no sentido anti-horário.
             </p>
             <ul style={{ color: '#065f46', paddingLeft: '20px' }}>
               <li>🔄 Os vetores são sempre <strong>perpendiculares</strong> ao raio que vai da origem ao ponto</li>
               <li>📏 A <strong>magnitude</strong> do vetor aumenta conforme nos afastamos da origem</li>
-              <li>🎯 Na origem (0,0), o vetor é <strong>nulo</strong>: F(0,0) = (0,0)</li>
+              <li>🎯 Na origem (0,0), o vetor é <strong>nulo</strong>: <MathInline>{"\\mathbf{F}(0,0) = (0,0)"}</MathInline></li>
               <li>🌪️ Este padrão é característico de um <strong>campo de rotação</strong></li>
             </ul>
           </div>
@@ -353,10 +358,10 @@ const Problem01_CampoVetorial = ({ onBack }) => {
             textAlign: 'center'
           }}>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '12px' }}>
-              ✅ Resposta da Questão
+              ✅ Análise do Campo Vetorial
             </h3>
             <p style={{ fontSize: '1.125rem' }}>
-              O campo vetorial F(x,y) = -yi + xj representa um{' '}
+              O campo vetorial <MathInline>{"\\mathbf{F}(x,y) = -y\\mathbf{i} + x\\mathbf{j}"}</MathInline> representa um{' '}
               <strong>CAMPO DE ROTAÇÃO ANTI-HORÁRIO</strong> ao redor da origem.
             </p>
             <p style={{ marginTop: '8px', opacity: 0.9 }}>

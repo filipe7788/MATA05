@@ -1,5 +1,6 @@
 // Importações dos componentes de problemas
 import Problem01_CampoVetorial from './Problem01_CampoVetorial';
+import Problem02_Gradiente from './Problem02_Gradiente';
 
 // Dados dos problemas organizados por semana
 export const weeksData = [
@@ -20,10 +21,10 @@ export const weeksData = [
       {
         id: 2,
         title: "Gradiente de Função Escalar",
-        description: "Visualize o gradiente ∇f da função f(x,y) = x² + y² e interprete geometricamente.",
-        tags: ["Gradiente", "Campo Escalar", "Derivadas"],
-        status: "locked",
-        component: null
+        description: "Calcule o gradiente ∇f da função f(x,y,z) = x²y³ - 2xz no ponto P = (1, -1, 2).",
+        tags: ["Gradiente", "Função Escalar", "Derivadas Parciais"],
+        status: "completed",
+        component: "Problem02_Gradiente"
       }
     ]
   }
@@ -32,6 +33,7 @@ export const weeksData = [
 // Mapeamento dos componentes de problemas
 export const problemComponents = {
   Problem01_CampoVetorial: Problem01_CampoVetorial,
+  Problem02_Gradiente: Problem02_Gradiente,
   // Adicione novos componentes aqui conforme forem criados
 };
 
