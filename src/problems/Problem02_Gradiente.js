@@ -386,13 +386,7 @@ const Problem02_Gradiente = ({ onBack }) => {
               <h3 style={{ fontWeight: 'bold', color: '#92400e', marginBottom: '12px' }}>
                 🧮 Resolução Passo-a-Passo:
               </h3>
-              <div style={{ 
-                background: 'white', 
-                padding: '32px', 
-                borderRadius: '12px', 
-                border: '1px solid #e9ecef',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
-              }}>
+              <div className="math-container">
                 
                 {/* Seção 1: Derivadas Parciais */}
                 <MathSection title="1. Cálculo das derivadas parciais">

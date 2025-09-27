@@ -9,15 +9,9 @@ const WeekSection = ({ week, completedProblems, onProblemClick }) => {
   const weekPercentage = (weekProgress / weekTotal) * 100;
 
   return (
-    <div style={{
-      background: 'white',
-      borderRadius: '16px',
-      padding: '24px',
-      boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-      transition: 'transform 0.3s ease',
-    }}>
+    <div className="week-section">
       {/* Header da Semana */}
-      <div style={{
+      <div className="week-header" style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -26,7 +20,7 @@ const WeekSection = ({ week, completedProblems, onProblemClick }) => {
         borderBottom: '2px solid #f1f5f9'
       }}>
         <div>
-          <h2 style={{
+          <h2 className="week-title" style={{
             fontSize: '1.5rem',
             fontWeight: 'bold',
             color: '#1e293b',
@@ -87,11 +81,7 @@ const WeekSection = ({ week, completedProblems, onProblemClick }) => {
       </div>
 
       {/* Grid de Problemas */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-        gap: '20px'
-      }}>
+      <div className="problems-grid">
         {week.problems.map((problem) => (
           <ProblemCard
             key={problem.id}

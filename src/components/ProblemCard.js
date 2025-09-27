@@ -18,26 +18,14 @@ const ProblemCard = ({ problem, isCompleted, onClick }) => {
   return (
     <div
       onClick={onClick}
+      className="problem-card"
       style={{
         background: getCardStyle(),
-        color: 'white',
-        borderRadius: '16px',
-        padding: '24px',
         cursor: problem.status === 'locked' ? 'not-allowed' : 'pointer',
-        transition: 'all 0.3s ease',
         position: 'relative',
         overflow: 'hidden',
         opacity: problem.status === 'locked' ? 0.75 : 1,
-        minHeight: '240px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
-        transform: 'translateY(0)',
-        ':hover': {
-          transform: 'translateY(-5px)',
-          boxShadow: '0 12px 35px rgba(0,0,0,0.2)'
-        }
+        transform: 'translateY(0)'
       }}
       onMouseEnter={(e) => {
         if (problem.status !== 'locked') {

@@ -1,0 +1,276 @@
+/* Estilos responsivos para matemática e cards */
+
+.math-container {
+  background: white;
+  padding: 32px;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.math-section {
+  margin-bottom: 32px;
+}
+
+.math-section-title {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.math-formula-box {
+  background: #f8f9fa;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  margin-bottom: 16px;
+}
+
+.math-derivation {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.math-step {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  padding: 8px 0;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.math-left {
+  min-width: 80px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.math-equals {
+  margin: 0 16px;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.math-right {
+  flex: 1;
+  min-width: 0;
+}
+
+.math-result {
+  background: #dc3545;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.math-result.green {
+  background: #198754;
+}
+
+.math-result.blue {
+  background: #0d6efd;
+}
+
+.final-result {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 28px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid #e9ecef;
+  font-size: 1.2rem;
+}
+
+/* Header responsivo */
+.app-header {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.app-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.app-subtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 1rem;
+  }
+  
+  .app-title {
+    font-size: 2rem !important;
+  }
+  
+  .app-subtitle {
+    font-size: 1rem !important;
+    padding: 0 0.5rem;
+  }
+  
+  .math-container {
+    padding: 20px;
+  }
+  
+  .math-section {
+    margin-bottom: 24px;
+  }
+  
+  .math-section-title {
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
+  
+  .math-formula-box {
+    padding: 16px;
+  }
+  
+  .math-step {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 1rem;
+    padding: 12px 0;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .math-step:last-child {
+    border-bottom: none;
+  }
+  
+  .math-left {
+    min-width: auto;
+    text-align: left;
+    font-weight: bold;
+    color: #495057;
+  }
+  
+  .math-equals {
+    margin: 0 8px;
+    font-size: 1.1rem;
+    align-self: flex-start;
+  }
+  
+  .math-right {
+    width: 100%;
+    word-break: break-all;
+  }
+  
+  .math-result {
+    margin-top: 8px;
+    padding: 8px 16px;
+    font-size: 1.1rem;
+    align-self: flex-start;
+  }
+  
+  .final-result {
+    padding: 20px;
+    font-size: 1rem;
+  }
+  
+  /* Stack horizontal layouts vertically on mobile */
+  .math-derivation {
+    gap: 12px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .math-container {
+    padding: 16px;
+    margin: 0 8px;
+  }
+  
+  .math-step {
+    padding: 8px 0;
+  }
+  
+  .math-formula-box {
+    padding: 12px;
+  }
+  
+  .final-result {
+    padding: 16px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Card responsivo */
+.problem-card {
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  color: white;
+  border-radius: 16px;
+  padding: 24px;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.week-section {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.problems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .problem-card {
+    padding: 16px;
+    min-height: 200px;
+  }
+  
+  .week-section {
+    padding: 16px;
+  }
+  
+  .problems-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .week-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px;
+  }
+  
+  .week-title {
+    font-size: 1.25rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .problems-grid {
+    grid-template-columns: 1fr;
+    margin: 0 -8px;
+  }
+  
+  .problem-card {
+    margin: 0 8px;
+    padding: 14px;
+    min-height: 180px;
+  }
+}

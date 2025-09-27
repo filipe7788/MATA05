@@ -82,17 +82,12 @@ const App = () => {
       </nav>
 
       {/* Header */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
+      <div className="app-header">
         <div style={{ textAlign: 'center', color: 'white', marginBottom: '2rem' }}>
-          <h1 style={{
-            fontSize: '3rem',
-            fontWeight: 'bold',
-            marginBottom: '1rem',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
-          }}>
+          <h1 className="app-title">
             Cálculo D - Visualizações Interativas
           </h1>
-          <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '1.5rem' }}>
+          <p className="app-subtitle">
             Explore conceitos de Cálculo Diferencial e Integral através de visualizações dinâmicas
           </p>
 
