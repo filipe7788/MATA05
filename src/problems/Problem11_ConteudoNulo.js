@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calculator, HelpCircle } from 'lucide-react';
+import { Calculator } from 'lucide-react';
 import { MathInline, MathSection, MathResult } from '../components/MathRenderer';
 
 const Problem11_ConteudoNulo = ({ onBack }) => {

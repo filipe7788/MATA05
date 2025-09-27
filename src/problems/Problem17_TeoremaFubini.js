@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calculator, BookOpen } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
 import { MathInline, MathSection, MathResult } from '../components/MathRenderer';
 
 const Problem17_TeoremaFubini = ({ onBack }) => {

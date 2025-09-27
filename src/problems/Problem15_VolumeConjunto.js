@@ -152,10 +152,6 @@ const Problem15_VolumeConjunto = ({ onBack }) => {
 
       // Sombrear a região do volume
       ctx.fillStyle = 'rgba(245, 158, 11, 0.3)';
-      const regionPoints = [
-        [0, 0, 0], [1, 0, 0], [1, 0, 1], [0, 0, 0], // face x=0
-        [0, 1, 0], [1, 1, 0], [1, 1, 3], [0, 1, 2] // face y=1
-      ];
 
       // Desenhar algumas faces do sólido
       const faces = [

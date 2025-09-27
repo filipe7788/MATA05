@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calculator, RotateCcw } from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 import { MathInline, MathSection, MathResult } from '../components/MathRenderer';
 
 const Problem19_InversaoOrdem = ({ onBack }) => {
